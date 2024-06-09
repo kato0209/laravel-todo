@@ -16,7 +16,7 @@ ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
 # WorkDir Path setting
-WORKDIR /src
+WORKDIR /var/www
 
 # Laravel Package install
 RUN composer global require "laravel/installer"
