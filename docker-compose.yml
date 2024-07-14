@@ -20,6 +20,7 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/var/www
+      - ./:/output
 
   nginx:
     image: nginx:latest
