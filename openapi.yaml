@@ -15,7 +15,40 @@ paths:
       responses:
         '200':
           description: OK
+  /api/users:
+    post:
+      tags:
+        - User
+      operationId: 5b6e72f178a035f354aff3d8b9eeb221
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserOutput'
+components:
+  schemas:
+    CreateUserInput:
+      required:
+        - email
+        - name
+        - password
+      type: object
+    CreateUserOutput:
+      required:
+        - email
+        - name
+      type: object
 tags:
   -
     name: health
     description: health
+  -
+    name: User
+    description: User
