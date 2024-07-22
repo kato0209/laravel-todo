@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 use OpenApi\Attributes as OA;
 use App\Http\Models\CreateUserInput;
 use App\Http\Models\CreateUserOutput;
+use App\Domain\Entity\User;
+use App\Application\Usecase\UserUsecase;
 
 
 #[OA\Post(path: '/api/users', tags: ['User'])]
@@ -24,7 +26,12 @@ class UserController extends Controller
             $request->input('password')
         );
 
-        $res = new CreateUserOutput($input->email, $input->name);
+        $user = new User();
+        $user->email = $input->email;
+        $user->name = $input->name;
+        $user->password = $input->password;
+
+        $res = UserUsecase.create_user($user);
 
         return response()->json($res);
     }
