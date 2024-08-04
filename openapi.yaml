@@ -42,6 +42,7 @@ components:
       type: object
     CreateUserOutput:
       required:
+        - id
         - email
         - name
       type: object

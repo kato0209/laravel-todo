@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../../Application/Usecase/User.php';
+require_once __DIR__ . '/../../Infrastructure/Repository/User.php';
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,12 +28,15 @@ class UserController extends Controller
             $request->input('password')
         );
 
-        $user = new User();
+        $user = new User;
         $user->email = $input->email;
         $user->name = $input->name;
         $user->password = $input->password;
 
-        $res = UserUsecase.create_user($user);
+        $userUsecase = new UserUsecase;
+
+        $new_user = $userUsecase->create_user($user);
+        $res = new CreateUserOutput($new_user->id, $new_user->email, $new_user->name);
 
         return response()->json($res);
     }

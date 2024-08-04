@@ -19,14 +19,16 @@ final class CreateUserInput
     }
 }
 
-#[OA\Schema(schema: "CreateUserOutput", type: "object", required: ['email', 'name'])]
+#[OA\Schema(schema: "CreateUserOutput", type: "object", required: ['id', 'email', 'name'])]
 final class CreateUserOutput
 {
+    public int $id;
     public string $email;
     public string $name;
 
-    public function __construct(string $email, string $name)
+    public function __construct(int $id, string $email, string $name)
     {
+        $this->id = $id;
         $this->email = $email;
         $this->name = $name;
     }
