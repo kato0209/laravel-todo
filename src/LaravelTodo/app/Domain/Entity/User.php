@@ -12,4 +12,9 @@ class User
     public \DateTime $updatedAt;
 
     public function __construct() {}
+
+    public function hashPassword(): void
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+    }
 }

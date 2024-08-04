@@ -7,8 +7,13 @@ use OpenApi\Attributes as OA;
 #[OA\Schema(schema: "CreateUserInput", type: "object", required: ['email', 'name', "password"])]
 final class CreateUserInput
 {
+    #[OA\Property(type: "string")]
     public string $email;
+
+    #[OA\Property(type: "string")]
     public string $name;
+
+    #[OA\Property(type: "string")]
     public string $password;
 
     public function __construct(string $email, string $name, string $password)
@@ -19,16 +24,21 @@ final class CreateUserInput
     }
 }
 
-#[OA\Schema(schema: "CreateUserOutput", type: "object", required: ['id', 'email', 'name'])]
+#[OA\Schema(schema: "CreateUserOutput", type: "object", required: ['UserID', 'email', 'name'])]
 final class CreateUserOutput
 {
-    public int $id;
+    #[OA\Property(type: "integer")]
+    public int $UserID;
+
+    #[OA\Property(type: "string")]
     public string $email;
+
+    #[OA\Property(type: "string")]
     public string $name;
 
-    public function __construct(int $id, string $email, string $name)
+    public function __construct(int $UserID, string $email, string $name)
     {
-        $this->id = $id;
+        $this->UserID = $UserID;
         $this->email = $email;
         $this->name = $name;
     }

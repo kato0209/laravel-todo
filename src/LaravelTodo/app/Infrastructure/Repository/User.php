@@ -10,6 +10,10 @@ class UserRepository
     public function create_user(User $user): User
     {
         $userModel = new Users;
+        $isExist = $userModel->where('email', $user->email)->exists();
+        if ($isExist) {
+            throw new \Exception('User already exists');
+        }
         $userObj = $userModel->create([
             'name' => $user->name,
             'email' => $user->email,

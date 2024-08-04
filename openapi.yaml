@@ -15,6 +15,23 @@ paths:
       responses:
         '200':
           description: OK
+  /api/todos:
+    post:
+      tags:
+        - Todo
+      operationId: a410075d8d8c68946081b536e14b05c5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoInput'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTodoOutput'
   /api/users:
     post:
       tags:
@@ -34,22 +51,66 @@ paths:
                 $ref: '#/components/schemas/CreateUserOutput'
 components:
   schemas:
+    CreateTodoInput:
+      required:
+        - userID
+        - content
+      properties:
+        userID:
+          type: integer
+        content:
+          type: string
+      type: object
+    CreateTodoOutput:
+      required:
+        - todoID
+        - userID
+        - content
+        - createdAt
+      properties:
+        todoID:
+          type: integer
+        userID:
+          type: integer
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      type: object
     CreateUserInput:
       required:
         - email
         - name
         - password
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
       type: object
     CreateUserOutput:
       required:
-        - id
+        - UserID
         - email
         - name
+      properties:
+        UserID:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
       type: object
 tags:
   -
     name: health
     description: health
+  -
+    name: Todo
+    description: Todo
   -
     name: User
     description: User

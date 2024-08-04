@@ -22,6 +22,11 @@ class UserController extends Controller
 {
     public function create_user(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|max:20',
+            'password' => 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/'
+        ]);
         $input = new CreateUserInput(
             $request->input('email'),
             $request->input('name'),

@@ -11,8 +11,8 @@ class UserUsecase
 {
     public function create_user(User $user): User
     {
+        $user->hashPassword();
         $userRepository = new UserRepository;
-
         $user = $userRepository->create_user($user);
 
         return $user;
