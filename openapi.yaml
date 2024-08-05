@@ -16,10 +16,23 @@ paths:
         '200':
           description: OK
   /api/todos:
+    get:
+      tags:
+        - Todo
+      operationId: 403cd30b0c347e1f4f3cb2550035f43d
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
     post:
       tags:
         - Todo
-      operationId: a410075d8d8c68946081b536e14b05c5
+      operationId: 9cf34bbb55f8bad045cdb2e4f8451890
       requestBody:
         content:
           application/json:
@@ -31,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateTodoOutput'
+                $ref: '#/components/schemas/Todo'
   /api/users:
     post:
       tags:
@@ -61,7 +74,7 @@ components:
         content:
           type: string
       type: object
-    CreateTodoOutput:
+    Todo:
       required:
         - todoID
         - userID

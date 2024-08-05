@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../Models/User.php';
 require_once __DIR__ . '/../../Application/Usecase/User.php';
-require_once __DIR__ . '/../../Infrastructure/Repository/User.php';
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

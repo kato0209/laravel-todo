@@ -20,8 +20,8 @@ final class CreateTodoInput
     }
 }
 
-#[OA\Schema(schema: "CreateTodoOutput", type: "object", required: ['todoID', 'userID', 'content', 'createdAt'])]
-final class CreateTodoOutput
+#[OA\Schema(schema: "Todo", type: "object", required: ['todoID', 'userID', 'content', 'createdAt'])]
+final class Todo
 {
     #[OA\Property(type: "integer")]
     public int $todoID;
