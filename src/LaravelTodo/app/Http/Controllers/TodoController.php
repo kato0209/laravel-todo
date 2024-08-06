@@ -43,7 +43,13 @@ class TodoController extends Controller
         return response()->json($res);
     }
 
-    #[OA\Get(path: '/api/todos', tags: ['Todo'])]
+    #[OA\Get(
+        path: '/api/todos', 
+        tags: ['Todo'], 
+        parameters: [
+            new OA\Parameter(name: 'userID', in: 'query', required: false, schema: OA\Schema(type: 'integer'))
+        ]
+    )]
     #[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(type: 'array', items: new OA\Items(ref: "#/components/schemas/Todo"))])]
     public function get_todos(Request $request)
     {
