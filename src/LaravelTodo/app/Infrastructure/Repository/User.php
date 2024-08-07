@@ -26,4 +26,23 @@ class UserRepository
 
         return $user;
     }
+
+    public function get_user_by_email(string $email): User
+    {
+        $userModel = new Users;
+        $userObj = $userModel->where('email', $email)->first();
+        if (!$userObj) {
+            throw new \Exception('User not found');
+        }
+
+        $user = new User;
+        $user->id = $userObj->id;
+        $user->name = $userObj->name;
+        $user->email = $userObj->email;
+        $user->password = $userObj->password;
+        $user->createdAt = $userObj->created_at;
+        $user->updatedAt = $userObj->updated_at;
+
+        return $user;
+    }
 }

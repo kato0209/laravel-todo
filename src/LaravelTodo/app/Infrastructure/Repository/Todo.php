@@ -22,10 +22,16 @@ class TodoRepository
         return $todo;
     }
 
-    public function get_todos(): array
+    public function get_todos(?int $userID = null): array
     {
         $todoModel = new Todos;
-        $todoData = $todoModel->get()->toArray();
+
+        if ($userID) {
+            $todoData = $todoModel->where('user_id', $userID)->get()->toArray();
+        } else {
+            $todoData = $todoModel->get()->toArray();
+        }
+        
         $todoList = array();
         foreach ($todoData as $t) {
             $todo = new Todo;

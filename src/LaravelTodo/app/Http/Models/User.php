@@ -24,8 +24,8 @@ final class CreateUserInput
     }
 }
 
-#[OA\Schema(schema: "CreateUserOutput", type: "object", required: ['UserID', 'email', 'name'])]
-final class CreateUserOutput
+#[OA\Schema(schema: "User", type: "object", required: ['UserID', 'email', 'name'])]
+final class User
 {
     #[OA\Property(type: "integer")]
     public int $UserID;

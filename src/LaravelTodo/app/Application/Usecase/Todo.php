@@ -17,10 +17,10 @@ class TodoUsecase
         return $todo;
     }
 
-    public function get_todos(): array
+    public function get_todos(?int $userID = null): array
     {
         $todoRepository = new TodoRepository;
-        $todos = $todoRepository->get_todos();
+        $todos = $todoRepository->get_todos($userID);
 
         return $todos;
     }

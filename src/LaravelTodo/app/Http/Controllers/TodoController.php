@@ -47,14 +47,21 @@ class TodoController extends Controller
         path: '/api/todos', 
         tags: ['Todo'], 
         parameters: [
-            new OA\Parameter(name: 'userID', in: 'query', required: false, schema: OA\Schema(type: 'integer'))
+            new OA\Parameter(
+                name: 'userID', 
+                in: 'query', 
+                required: false, 
+                schema: new OA\Schema(type: 'integer')
+            )
         ]
     )]
     #[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(type: 'array', items: new OA\Items(ref: "#/components/schemas/Todo"))])]
     public function get_todos(Request $request)
     {
+        $userID = $request->query('userID');
+        
         $todoUsecase = new TodoUsecase;
-        $todos = $todoUsecase->get_todos();
+        $todos = $todoUsecase->get_todos($userID);
 
         $res = array();
         foreach ($todos as $t) {

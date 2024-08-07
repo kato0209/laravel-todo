@@ -6,6 +6,23 @@ servers:
   -
     url: 'http://localhost:80'
 paths:
+  /api/login:
+    post:
+      tags:
+        - Auth
+      operationId: 99539a8e18179644cbac3165cf994fe5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /api/health:
     get:
       tags:
@@ -20,6 +37,13 @@ paths:
       tags:
         - Todo
       operationId: 403cd30b0c347e1f4f3cb2550035f43d
+      parameters:
+        -
+          name: userID
+          in: query
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
           description: OK
@@ -61,9 +85,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateUserOutput'
+                $ref: '#/components/schemas/User'
 components:
   schemas:
+    LoginInput:
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      type: object
     CreateTodoInput:
       required:
         - userID
@@ -104,7 +138,7 @@ components:
         password:
           type: string
       type: object
-    CreateUserOutput:
+    User:
       required:
         - UserID
         - email
@@ -118,6 +152,9 @@ components:
           type: string
       type: object
 tags:
+  -
+    name: Auth
+    description: Auth
   -
     name: health
     description: health

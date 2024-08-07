@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use OpenApi\Attributes as OA;
 use App\Http\Models\CreateUserInput;
-use App\Http\Models\CreateUserOutput;
+use App\Http\Models\User as UserResponse;
 use App\Domain\Entity\User;
 use App\Application\Usecase\UserUsecase;
 
 
 #[OA\Post(path: '/api/users', tags: ['User'])]
 #[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/CreateUserInput")])]
-#[OA\Response(response: Response::HTTP_CREATED, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/CreateUserOutput")])]
+#[OA\Response(response: Response::HTTP_CREATED, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/User")])]
 class UserController extends Controller
 {
     public function create_user(Request $request)
@@ -40,7 +40,7 @@ class UserController extends Controller
         $userUsecase = new UserUsecase;
 
         $new_user = $userUsecase->create_user($user);
-        $res = new CreateUserOutput($new_user->id, $new_user->email, $new_user->name);
+        $res = new UserResponse($new_user->id, $new_user->email, $new_user->name);
 
         return response()->json($res);
     }
