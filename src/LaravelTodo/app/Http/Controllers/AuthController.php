@@ -39,6 +39,7 @@ class AuthController extends Controller
 
         $res = new UserResponse($existingUser->id, $existingUser->email, $existingUser->name);
 
+        
         return response()->json($res);
     }
 }
