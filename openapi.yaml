@@ -22,7 +22,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                properties:
+                  jwtToken: { type: string }
+                type: object
   /api/health:
     get:
       tags:

@@ -16,7 +16,7 @@ use App\Application\Usecase\AuthUsecase;
 
 #[OA\Post(path: '/api/login', tags: ['Auth'])]
 #[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/LoginInput")])]
-#[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/User")])]
+#[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(type: 'object', properties: ['jwtToken' => ['type' => 'string']])])]
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -35,11 +35,10 @@ class AuthController extends Controller
         $user->password = $input->password;
 
         $authUsecase = new AuthUsecase;
-        $existingUser = $authUsecase->login($user);
-
-        $res = new UserResponse($existingUser->id, $existingUser->email, $existingUser->name);
-
+        $jwtToken = $authUsecase->login($user);
         
-        return response()->json($res);
+        return response()->json([
+            'jwtToken' => $jwtToken
+        ]);
     }
 }

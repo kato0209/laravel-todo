@@ -6,10 +6,11 @@ require_once __DIR__ . '/../../Infrastructure/Repository/User.php';
 
 use App\Domain\Entity\User;
 use App\Infrastructure\Repository\UserRepository;
+use App\Utils\JWTManager;
 
 class AuthUsecase
 {
-    public function login(User $user): User
+    public function login(User $user): string
     {
         $userRepository = new UserRepository;
         $existingUser = $userRepository->get_user_by_email($user->email);
@@ -18,6 +19,9 @@ class AuthUsecase
             throw new \Exception('Invalid password');
         }
 
-        return $existingUser;
+        $jwt = new JWTManager;
+        $jwtToken = $jwt->encode($existingUser->id);
+
+        return $jwtToken;
     }
 }
