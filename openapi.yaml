@@ -10,7 +10,7 @@ paths:
     post:
       tags:
         - Auth
-      operationId: 99539a8e18179644cbac3165cf994fe5
+      operationId: a3b306d14572d1f4bd6c064b3233e7b8
       requestBody:
         content:
           application/json:
@@ -72,10 +72,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Todo'
   /api/users:
+    get:
+      tags:
+        - User
+      operationId: e029df7ae93012f7cdc7b3062ed22e4e
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
     post:
       tags:
         - User
-      operationId: 5b6e72f178a035f354aff3d8b9eeb221
+      operationId: b6af8b6d643a137be615555100cb13af
       requestBody:
         content:
           application/json:

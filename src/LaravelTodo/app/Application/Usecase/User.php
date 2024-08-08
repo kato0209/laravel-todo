@@ -17,4 +17,12 @@ class UserUsecase
 
         return $user;
     }
+
+    public function get_user_by_id(int $userID): User
+    {
+        $userRepository = new UserRepository;
+        $user = $userRepository->get_user_by_id($userID);
+
+        return $user;
+    }
 }

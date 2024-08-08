@@ -14,11 +14,20 @@ use App\Domain\Entity\User;
 use App\Application\Usecase\AuthUsecase;
 
 
-#[OA\Post(path: '/api/login', tags: ['Auth'])]
-#[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/LoginInput")])]
-#[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(type: 'object', properties: ['jwtToken' => ['type' => 'string']])])]
 class AuthController extends Controller
 {
+    #[OA\Post(path: '/api/login', tags: ['Auth'])]
+    #[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/LoginInput")])]
+    #[OA\Response(
+        response: Response::HTTP_OK, 
+        description: 'OK', 
+        content: [new OA\JsonContent(
+            properties: [ new OA\Property(
+                property: 'jwtToken',
+                type: 'string',
+            )]
+        )]
+    )]
     public function login(Request $request)
     {
         $request->validate([

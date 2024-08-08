@@ -14,11 +14,11 @@ use App\Domain\Entity\User;
 use App\Application\Usecase\UserUsecase;
 
 
-#[OA\Post(path: '/api/users', tags: ['User'])]
-#[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/CreateUserInput")])]
-#[OA\Response(response: Response::HTTP_CREATED, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/User")])]
 class UserController extends Controller
 {
+    #[OA\Post(path: '/api/users', tags: ['User'])]
+    #[OA\RequestBody(content: [new OA\JsonContent(ref: "#/components/schemas/CreateUserInput")])]
+    #[OA\Response(response: Response::HTTP_CREATED, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/User")])]
     public function create_user(Request $request)
     {
         $request->validate([
@@ -43,5 +43,23 @@ class UserController extends Controller
         $res = new UserResponse($new_user->id, $new_user->email, $new_user->name);
 
         return response()->json($res);
+    }
+
+    #[OA\Get(path: '/api/users', tags: ['User'])]
+    #[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(ref: "#/components/schemas/User")])]
+    public function get_login_user(Request $request)
+    {
+        $jwt = $request->attributes->get('jwt');
+        if (!$jwt) {
+            return response()->json(['error' => 'jwt is not found'], 401);
+        }
+        $userID = $jwt['userID'];
+        if (!$userID) {
+            return response()->json(['error' => 'userID is not found'], 401);
+        }
+        $userUsecase = new UserUsecase;
+        $user = $userUsecase->get_user_by_id($userID);
+
+        return response()->json($user);
     }
 }
