@@ -24,4 +24,10 @@ class TodoUsecase
 
         return $todos;
     }
+
+    public function delete_todo(int $todoID, int $userID): void
+    {
+        $todoRepository = new TodoRepository;
+        $todoRepository->delete_todo($todoID, $userID);
+    }
 }

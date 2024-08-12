@@ -71,6 +71,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+  '/api/todos/{todoID}':
+    delete:
+      tags:
+        - Todo
+      operationId: ac72b330055811a0f519b33efe7c2383
+      parameters:
+        -
+          name: todoID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: OK
   /api/users:
     get:
       tags:

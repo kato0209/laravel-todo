@@ -27,7 +27,7 @@ final class Todo
     public int $todoID;
 
     #[OA\Property(type: "integer")]
-    public string $userID;
+    public int $userID;
 
     #[OA\Property(type: "string")]
     public string $content;

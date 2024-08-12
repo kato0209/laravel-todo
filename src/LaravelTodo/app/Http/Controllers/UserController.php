@@ -42,7 +42,7 @@ class UserController extends Controller
         $new_user = $userUsecase->create_user($user);
         $res = new UserResponse($new_user->id, $new_user->email, $new_user->name);
 
-        return response()->json($res);
+        return response()->json($res, 201);
     }
 
     #[OA\Get(path: '/api/users', tags: ['User'])]

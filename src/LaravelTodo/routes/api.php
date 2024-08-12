@@ -12,6 +12,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
     Route::post('/todos', [TodoController::class, 'create_todo']);
     Route::get('/todos', [TodoController::class, 'get_todos']);
+    Route::delete('/todos/{todoID}', [TodoController::class, 'delete_todo'])->where('todoID', '[0-9]+');
 });
 
 Route::get('/health', [HealthController::class, 'index']);

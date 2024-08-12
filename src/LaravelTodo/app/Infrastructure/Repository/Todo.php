@@ -16,8 +16,8 @@ class TodoRepository
         ]);
 
         $todo->id = $todoObj->id;
-        $todo->createdAt = $todoObj->created_at;
-        $todo->updatedAt = $todoObj->updated_at;
+        $todo->createdAt = new \DateTime($todoObj->created_at);
+        $todo->updatedAt = new \DateTime($todoObj->updated_at);
 
         return $todo;
     }
@@ -44,5 +44,12 @@ class TodoRepository
         }
 
         return $todoList;
+    }
+
+    public function delete_todo(int $todoID, int $userID): void
+    {
+        $todoModel = new Todos;
+        $todoModel->where('id', $todoID)->where('user_id', $userID)->firstOrFail();
+        $todoModel->where('id', $todoID)->where('user_id', $userID)->delete();
     }
 }

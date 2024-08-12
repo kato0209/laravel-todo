@@ -40,7 +40,7 @@ class TodoController extends Controller
 
         $res = new TodoResponse($new_todo->id, $new_todo->userID, $new_todo->content, $new_todo->createdAt);
 
-        return response()->json($res);
+        return response()->json($res, 201);
     }
 
     #[OA\Get(
@@ -58,6 +58,10 @@ class TodoController extends Controller
     #[OA\Response(response: Response::HTTP_OK, description: 'OK', content: [new OA\JsonContent(type: 'array', items: new OA\Items(ref: "#/components/schemas/Todo"))])]
     public function get_todos(Request $request)
     {
+        $jwt = $request->attributes->get('jwt');
+        if (!$jwt) {
+            return response()->json(['error' => 'jwt is not found'], 401);
+        }
         $userID = $request->query('userID');
         
         $todoUsecase = new TodoUsecase;
@@ -69,5 +73,39 @@ class TodoController extends Controller
         }
 
         return response()->json($res);
+    }
+
+    #[OA\Delete(
+        path: '/api/todos/{todoID}', 
+        tags: ['Todo'], 
+        parameters: [
+            new OA\Parameter(
+                name: 'todoID', 
+                in: 'path', 
+                required: true, 
+                schema: new OA\Schema(type: 'integer')
+            )
+        ]
+    )]
+    #[OA\Response(response: "204", description: 'OK')]
+    public function delete_todo(Request $request)
+    {
+        $jwt = $request->attributes->get('jwt');
+        if (!$jwt) {
+            return response()->json(['error' => 'jwt is not found'], 401);
+        }
+        $userID = $jwt['userID'];
+        if (!$userID) {
+            return response()->json(['error' => 'userID is not found'], 401);
+        }
+        $todoID = $request->route('todoID');
+        if (!$todoID) {
+            return response()->json(['error' => 'todoID is not found'], 400);
+        }
+
+        $todoUsecase = new TodoUsecase;
+        $todoUsecase->delete_todo($todoID, $userID);
+
+        return response()->json(null, 204);
     }
 }
